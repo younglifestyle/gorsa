@@ -187,9 +187,9 @@ func pubKeyDecrypt(pub *rsa.PublicKey, data []byte) ([]byte, error) {
 	if d[0] != 0 {
 		return nil, ErrDataBroken
 	}
-	if d[1] != 0 && d[1] != 1 {
+	/*if d[1] != 0 && d[0] != 1 {    
 		return nil, ErrKeyPairDismatch
-	}
+	}*/
 	var i = 2
 	for ; i < len(d); i++ {
 		if d[i] == 0 {
@@ -211,7 +211,7 @@ func priKeyEncrypt(rand io.Reader, priv *rsa.PrivateKey, hashed []byte) ([]byte,
 		return nil, ErrDataLen
 	}
 	em := make([]byte, k)
-	em[1] = 1
+	em[1] = 2   // 藏弘修改，origin : 1
 	for i := 2; i < k-tLen-1; i++ {
 		em[i] = 0xff
 	}
